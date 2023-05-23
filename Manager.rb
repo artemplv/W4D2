@@ -9,5 +9,3 @@ class Manager < Employee
     total_salary * multiplier
   end
 end
-
-
