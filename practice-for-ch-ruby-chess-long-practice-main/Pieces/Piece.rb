@@ -12,7 +12,7 @@ class Piece
   end
 
   def empty?
-    
+    return true if self.symbol == 'null'
   end 
 
 end
