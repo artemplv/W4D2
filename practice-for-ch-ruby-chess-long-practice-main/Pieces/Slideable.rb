@@ -11,7 +11,15 @@ module Slideable
     end 
 
     def moves
-        self.move_dirs
+        res = []
+        dirs = self.move_dirs
+        x, y = self.pos
+
+        dirs.each do |dir|
+            dx, dy = dir
+            new_pos = [x + dx, y + dy]
+            res << new_pos if self.board.valid_pos?(new_pos)
+        end
         
     end 
 
