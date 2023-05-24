@@ -13,7 +13,7 @@ class Piece
   end
 
   def empty?
-    return true if self.symbol == 'null'
+    return true if self.class == 'NullPiece'
   end 
 
 end

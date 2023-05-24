@@ -1,8 +1,15 @@
-require_relative "/Pieces/Piece"
+require_relative "Pieces/Piece"
+require_relative "Pieces/NullPiece"
+require_relative "Pieces/Bishop"
+require_relative "Pieces/Queen"
+require_relative "Pieces/Rook"
+require_relative "Pieces/Pawn"
+require_relative "Pieces/Knight"
+require_relative "Pieces/King"
 
 class Board
   def initialize
-    @rows = Array.new(8) { Array.new(8) { Piece.new("null") } }
+    @rows = Array.new(8) { Array.new(8) { NullPiece.instance } }
     self.fillBoard
   end
 
@@ -13,7 +20,7 @@ class Board
   def printBoard
     @rows.each do |row|
       row.each do |cell|
-        print [cell.type]
+        print [cell.to_s]
       end
       print "\n"
     end
@@ -23,11 +30,14 @@ class Board
   def move_piece(start_pos, end_pos)
     if !valid_pos?(start_pos)
       raise "Not a valid starting position"
-    elsif self[start_pos].type == "null"
+    elsif self[start_pos] == NullPiece.instance
       raise "There is no piece at this position"
     elsif !valid_pos?(end_pos)
       raise "Piece cannot move to end position"
     end
+
+    self[end_pos] = self[start_pos]
+    self[start_pos] = NullPiece.instance
   end
 
   def valid_pos?(pos)
@@ -42,28 +52,36 @@ class Board
     @rows[x][y]
   end
 
+  def []=(pos, val)
+    x, y = pos
+    @rows[x][y] = val
+  end
+
   private
 
   def fillBoard
-    [1, 6].each do |idx|
-      (0..7).each do |cellIdx|
-        @rows[idx][cellIdx] = Piece.new("pawn")
+    fill_front_rows
+    fill_back_rows
+  end
+
+  def fill_front_rows
+    [:white, :black].each do |color|
+      row_idx = color == :white ? 6 : 1
+
+      (0..7).each do |cell_idx|
+        @rows[row_idx][cell_idx] = Pawn.new(color, @rows, [row_idx, cell_idx])
       end
     end
+  end
 
-    [0, 7].each do |idx|
-      (0..7).each do |cellIdx|
-        if cellIdx == 0 || cellIdx == 7
-          @rows[idx][cellIdx] = Piece.new("rook")
-        elsif cellIdx == 1 || cellIdx == 6
-          @rows[idx][cellIdx] = Piece.new("knight")
-        elsif cellIdx == 2 || cellIdx == 5
-          @rows[idx][cellIdx] = Piece.new("bishop")
-        elsif cellIdx == 3
-          @rows[idx][cellIdx] = Piece.new("queen")
-        elsif cellIdx == 4
-          @rows[idx][cellIdx] = Piece.new("king")
-        end
+  def fill_back_rows
+    [:white, :black].each do |color|
+      row_idx = color == :white ? 7 : 0
+
+      order = [Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook]
+
+      (0..7).each do |cell_idx|
+        @rows[row_idx][cell_idx] = order[cell_idx].new(color, @rows, [row_idx, cell_idx])
       end
     end
   end
