@@ -6,8 +6,11 @@ require_relative "Pieces/Rook"
 require_relative "Pieces/Pawn"
 require_relative "Pieces/Knight"
 require_relative "Pieces/King"
+require "colorize" 
 
 class Board
+  attr_accessor :rows
+  
   def initialize
     @rows = Array.new(8) { Array.new(8) { NullPiece.instance } }
     self.fillBoard
@@ -15,16 +18,6 @@ class Board
 
   def inspect
     "id: #{self.object_id}, rows: #{@rows}"
-  end
-
-  def printBoard
-    @rows.each do |row|
-      row.each do |cell|
-        print [cell.to_s]
-      end
-      print "\n"
-    end
-    nil
   end
 
   def move_piece(start_pos, end_pos)
