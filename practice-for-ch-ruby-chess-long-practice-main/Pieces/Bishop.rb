@@ -9,7 +9,11 @@ class Bishop < Piece
   end
 
   def symbol
-    return "bishop"
+    if self.color == :white
+        return "♗"
+    else
+        return "♝"
+    end 
   end
 
   def move_dirs

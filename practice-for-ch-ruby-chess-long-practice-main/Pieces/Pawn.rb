@@ -5,7 +5,13 @@ class Pawn < Piece
     super
   end
 
-  def symbol
-    return "pawn"
+   def symbol
+    if self.color == :white
+        return "♙"
+    else
+        return "♟"
+    end 
   end
+
 end
+

@@ -37,6 +37,7 @@ class Board
     end
 
     self[end_pos] = self[start_pos]
+    self[end_pos].pos = end_pos
     self[start_pos] = NullPiece.instance
   end
 
@@ -69,7 +70,7 @@ class Board
       row_idx = color == :white ? 6 : 1
 
       (0..7).each do |cell_idx|
-        @rows[row_idx][cell_idx] = Pawn.new(color, @rows, [row_idx, cell_idx])
+        @rows[row_idx][cell_idx] = Pawn.new(color, self, [row_idx, cell_idx])
       end
     end
   end
@@ -81,7 +82,7 @@ class Board
       order = [Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook]
 
       (0..7).each do |cell_idx|
-        @rows[row_idx][cell_idx] = order[cell_idx].new(color, @rows, [row_idx, cell_idx])
+        @rows[row_idx][cell_idx] = order[cell_idx].new(color, self, [row_idx, cell_idx])
       end
     end
   end

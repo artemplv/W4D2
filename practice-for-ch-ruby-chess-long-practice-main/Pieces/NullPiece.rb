@@ -9,8 +9,7 @@ class NullPiece < Piece
     super(nil, nil, nil)
   end
 
-  def symbol 
-    return "null"
-  end 
-
+  def symbol
+    return " "
+  end
 end

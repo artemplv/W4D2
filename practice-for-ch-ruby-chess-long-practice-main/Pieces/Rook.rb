@@ -9,7 +9,11 @@ class Rook < Piece
   end
 
   def symbol
-    return "rook"
+    if self.color == :white
+        return "♖"
+    else
+        return "♜"
+    end 
   end
 
   private

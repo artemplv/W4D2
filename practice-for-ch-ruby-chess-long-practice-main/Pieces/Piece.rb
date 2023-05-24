@@ -1,5 +1,5 @@
 class Piece
-  attr_reader :color, :board 
+  attr_reader :color, :board
   attr_accessor :pos
 
   def initialize(color, board, pos)
@@ -9,11 +9,10 @@ class Piece
   end
 
   def to_s
-    "#{self.symbol} : #{color}"
+    "#{self.symbol}"
   end
 
   def empty?
-    return true if self.class == 'NullPiece'
-  end 
-
+    return true if self.class == "NullPiece"
+  end
 end

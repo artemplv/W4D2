@@ -8,7 +8,11 @@ class Queen < Piece
   end
 
   def symbol
-    return "queen"
+    if self.color == :white
+        return "♕"
+    else
+        return "♛"
+    end 
   end
 
   def move_dirs

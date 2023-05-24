@@ -12,6 +12,10 @@ module Slideable
     DIAGONAL_DIRS
   end
 
+  def move_diffs
+    raise NotImplementedError
+  end
+
   def moves
     res = []
     dirs = self.move_dirs
@@ -20,13 +24,15 @@ module Slideable
       dx, dy = dir
       res += grow_unblocked_moves_in_dir(dx, dy)
     end
+
+    return res
   end
 
   def grow_unblocked_moves_in_dir(dx, dy)
     accumulator = []
     last_pos = self.pos
     x, y = last_pos
-    nextpos = [x + dx, y + dy]
+    next_pos = [x + dx, y + dy]
 
     while self.board.valid_pos?(next_pos) && self.board[next_pos].color != self.color
       accumulator << next_pos
